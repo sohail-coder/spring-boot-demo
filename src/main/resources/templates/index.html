@@ -1,0 +1,30 @@
+<!DOCTYPE html >
+<html xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Hello</title>
+</head>
+
+<form action="#" th:action="@{/logout}" method="post">
+    <button type="submit" >Logout</button>
+</form>
+
+<body sec:authorize="hasRole('ADMIN')" onload="loaded()">
+        <script>
+            function loaded() {
+             window.location.href = "/user/";
+            }
+        </script>
+</body>
+
+<body sec:authorize="hasRole('CUSTOMER')" onload="loaded()">
+
+<script>
+            function loaded() {
+             window.location.href = "/customer/";
+            }
+        </script>
+</body>
+
+</html>

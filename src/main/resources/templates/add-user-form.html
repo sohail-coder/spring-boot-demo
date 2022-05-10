@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <title>Add user</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+          crossorigin="anonymous" />
+    <style type="text/css">
+    </style>
+</head>
+<body>
+<div class="container pt-4">
+    <h2>Add user to List</h2>
+    <hr>
+    <form action="#"  th:action="@{/user/adduser1}" th:object="${user}" method="post">
+
+        <input type="hidden" th:field="*{email}">
+            <div class="form-row">
+                <div class="form-group col-md-6">
+                    <label for="FirstName">First Name</label>
+                    <input th:field="*{firstName}" type="text" class="form-control" id="FirstName" placeholder="First Name">
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="LastName">LastName</label>
+                    <input th:field="*{lastName}"type="text" class="form-control" id="LastName" placeholder="Last Name">
+                </div>
+            </div>
+            <div class="form-group col-md-6">
+                <label for="email">Email</label>
+                <input th:field="*{email}" type="text" class="form-control" id="email" placeholder="Email">
+            </div>
+<!--        th:value="${authority.authority}"-->
+            <select class="form-select col-md-6" aria-label="Role" >
+                <option selected>Select the user role</option>
+                <option value="ROLE_CUSTOMER">Customer</option>
+                <option value="ROLE_ADMIN">Admin</option>
+
+            </select>
+            <div class="form-group">
+                <label for="Phone">Phone</label>
+                <input th:field="*{phone}" type="text" class="form-control" id="phone" placeholder="phone">
+            </div>
+
+        <button type="submit" class="btn btn-primary">SUBMIT</button>
+    </form>
+</div>
+</body>
+</html>
