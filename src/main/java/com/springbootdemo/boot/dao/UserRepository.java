@@ -1,4 +1,4 @@
-package com.springbootdemo.boot.repository;
+package com.springbootdemo.boot.dao;
 
 import com.springbootdemo.boot.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;

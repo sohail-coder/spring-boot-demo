@@ -18,6 +18,11 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ml-auto">
+            <li class="nav-item" style="color:white;">
+                Hello, <span style="color:white;" th:text="${userName}">title</span>
+            </li>
+            &nbsp;
+            &nbsp;
             <li class="nav-item">
                 <form action="#" th:action="@{/logout}" method="post">
                     <button type="submit" class="btn btn-success btn-sm">Logout</button>

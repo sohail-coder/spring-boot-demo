@@ -1,6 +1,9 @@
 package com.springbootdemo.boot.rest;
 
-import com.springbootdemo.boot.dao.UserDTO;
+import com.springbootdemo.boot.dto.ProductsDTO;
+import com.springbootdemo.boot.dto.UserDTO;
+import com.springbootdemo.boot.service.CustomerService;
+import com.springbootdemo.boot.service.UserService;
 import com.springbootdemo.boot.entity.Authority;
 import com.springbootdemo.boot.entity.Products;
 import com.springbootdemo.boot.entity.User;
@@ -17,24 +20,30 @@ import java.util.List;
 public class UserController {
 
     @Autowired
-    private UserDTO userDTO;
+    private UserService userService;
+    @Autowired
+    private CustomerService customerService;
 
     @GetMapping("/")
-    public String userHome(){
+    public String userHome(Model model){
+        UserDTO loggedInUser =customerService.getUserDetails();
+        model.addAttribute("userName",loggedInUser.getFirstName());
         return "home-user";
     }
 
     @GetMapping("/allUsers")
     public  String allUsers(Model model){
-        List<User> users = userDTO.findAllUsers();
+        List<User> users = userService.findAllUsers();
         model.addAttribute("users",users);
         return "all-users";
     }
 
     @GetMapping("/allProducts")
     public String allProducts(Model model){
-        List<Products> products = userDTO.findAllProducts();
+        List<ProductsDTO> products = userService.findAllProducts();
         model.addAttribute("products",products);
+        UserDTO loggedInUser =customerService.getUserDetails();
+        model.addAttribute("userName",loggedInUser.getFirstName());
         return "all-products";
     }
 
@@ -42,23 +51,28 @@ public class UserController {
     public String addProduct(Model model){
         Products products =new Products();
         model.addAttribute("product", products);
+        UserDTO loggedInUser =customerService.getUserDetails();
+        model.addAttribute("userName",loggedInUser.getFirstName());
+
         return "add-product-form";
     }
     @PostMapping("/addProduct1")
     public String addProductDb(@ModelAttribute("product") Products products){
-        userDTO.addProduct(products);
+        userService.addProduct(products);
         return "redirect:/user/allProducts";
     }
     @GetMapping("/delete")
     public String delete(@RequestParam("productId")int id, Model model){
-        userDTO.deleteProduct(id);
+        userService.deleteProduct(id);
         return "redirect:/user/allProducts";
     }
 
     @GetMapping("/showFormForUpdate")
     public String showFormForUpdate(@RequestParam("productId")int productId,Model model){
-        Products products = userDTO.findProduct(productId);
+        ProductsDTO products = userService.findProduct(productId);
         model.addAttribute("product", products);
+        UserDTO loggedInUser =customerService.getUserDetails();
+        model.addAttribute("userName",loggedInUser.getFirstName());
         return "add-product-form";
     }
 
@@ -73,31 +87,33 @@ public class UserController {
 
     @GetMapping("/showFormForUpdateUser")
     public String showFormForUpdateUser(@RequestParam("userId")String userId,Model model){
-        User user = userDTO.findUser(userId);
+        User user = userService.findUser(userId);
         model.addAttribute("user",user);
         return "add-user-form";
     }
-    @PostMapping("/adduser1")
-    public String addUserDb(@ModelAttribute("user") User user,
-                            @ModelAttribute("authority")Authority authority
-    ){
-        userDTO.addUser(user);
-        userDTO.addAuthority(user,authority.getAuthority());
-        return "redirect:/user/allUsers";
-    }
+//    @PostMapping("/adduser1")
+//    public String addUserDb(@ModelAttribute("user") User user,
+//                            @ModelAttribute("authority")Authority authority
+//    ){
+//        userService.addUser(user);
+//        userService.addAuthority(user,authority.getAuthority());
+//        return "redirect:/user/allUsers";
+//    }
 
-    @GetMapping("/deleteUser")
-    public String deleteUser(@RequestParam("userId") String userId){
-        userDTO.deleteUser(userId);
-        return "redirect:/user/allUsers";
-    }
+//    @GetMapping("/deleteUser")
+//    public String deleteUser(@RequestParam("userId") String userId){
+//        userService.deleteUser(userId);
+//        return "redirect:/user/allUsers";
+//    }
 
     @GetMapping("/users")
     public String users(@RequestParam("productId") int pId,Model model){
 
         List<User> users = new ArrayList<>();
-        users=userDTO.user(pId);
+        users= userService.user(pId);
         model.addAttribute("users",users);
+        UserDTO loggedInUser =customerService.getUserDetails();
+        model.addAttribute("userName",loggedInUser.getFirstName());
         return "all-users";
 
     }

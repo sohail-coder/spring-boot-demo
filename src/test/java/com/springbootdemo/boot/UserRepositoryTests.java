@@ -1,21 +1,16 @@
 package com.springbootdemo.boot;
 
-import com.springbootdemo.boot.dao.UserDTO;
-import com.springbootdemo.boot.entity.Authority;
+import com.springbootdemo.boot.service.UserService;
 import com.springbootdemo.boot.entity.Products;
 import com.springbootdemo.boot.entity.User;
-import com.springbootdemo.boot.repository.AuthorityRepository;
-import com.springbootdemo.boot.repository.UserRepository;
+import com.springbootdemo.boot.dao.AuthorityRepository;
+import com.springbootdemo.boot.dao.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.annotation.Rollback;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
 
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
@@ -25,7 +20,7 @@ public class UserRepositoryTests {
     private UserRepository userRepository;
 
     @Autowired
-    private UserDTO userDTO;
+    private UserService userService;
 
     @Autowired
     private AuthorityRepository authorityRepository;

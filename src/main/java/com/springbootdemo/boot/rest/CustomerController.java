@@ -1,15 +1,17 @@
 package com.springbootdemo.boot.rest;
 
-import com.springbootdemo.boot.dao.CustomerDTO;
-import com.springbootdemo.boot.entity.Products;
+import com.springbootdemo.boot.dto.UserDTO;
 import com.springbootdemo.boot.entity.User;
-import com.springbootdemo.boot.userDetails.IAuthenticationFacade;
+import com.springbootdemo.boot.service.CustomerService;
+import com.springbootdemo.boot.entity.Products;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.RequestDispatcher;
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Controller
@@ -17,9 +19,9 @@ import java.util.List;
 public class CustomerController {
 
     @Autowired
-    private CustomerDTO customerDTO;
+    private CustomerService customerService;
 
-
+//    private User loggedInUser =new User();
 //    @Autowired
 //    private IAuthenticationFacade authenticationFacade;
 //
@@ -32,51 +34,73 @@ public class CustomerController {
 
     @GetMapping("/")
     public String customerHome(Model model){
-        User user = new User();
-        model.addAttribute("user",user);
+        UserDTO loggedInUser =customerService.getUserDetails();
+        model.addAttribute("userName",loggedInUser.getFirstName());
         return "home-customer";
     }
 
     @GetMapping("/allProducts")
     public String allProducts(Model model){
-        List<Products> products = customerDTO.findAllProducts();
+        List<Products> products = customerService.findAllProducts();
         model.addAttribute("products",products);
+
         return "customer-all-products";
     }
 
     @GetMapping("/myProducts")
     public String myProducts(Model model){
-        User user = customerDTO.getUserDetails();
+        UserDTO user = customerService.getUserDetails();
         List<Products> products = user.getProducts();
         model.addAttribute("products",products);
+//        User loggedInUser =customerService.getUserDetails();
+        model.addAttribute("userName",user.getFirstName());
         return "customer-all-products";
     }
 
     @GetMapping("/addProductForm")
     public String addProductForm(Model model){
-        List<Products> products = customerDTO.findAllProducts();
+        List<Products> products = customerService.findAllProducts();
         model.addAttribute("products",products);
+        UserDTO loggedInUser =customerService.getUserDetails();
+        model.addAttribute("userName",loggedInUser.getFirstName());
         return "customer-add-product";
     }
 
     @GetMapping("/addProduct")
     public String addProduct(@RequestParam("pId")int id){
-        User user = customerDTO.getUserDetails();
-        customerDTO.addProduct(user,id);
+        UserDTO user = customerService.getUserDetails();
+
+        customerService.addProduct(user,id);
         return "redirect:/customer/addProductForm";
     }
     @GetMapping("/delete")
     public String delete(@RequestParam("productId")int pid){
-        User user = customerDTO.getUserDetails();
-        customerDTO.deleteProduct(user,pid);
+        UserDTO user = customerService.getUserDetails();
+        customerService.deleteProduct(user,pid);
         return "redirect:/customer/myProducts";
     }
 
     @GetMapping("/username")
     @ResponseBody
-    public User getUserDetails(){
-        return customerDTO.getUserDetails();
+    public String getUserDetails(){
+        return customerService.getUserDetails().getFirstName();
+//        return customerService.getUserDetails();
     }
 
+    @RequestMapping("/error")
+    public String handleError(HttpServletRequest request) {
+        Object status = request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE);
 
+        if (status != null) {
+            Integer statusCode = Integer.valueOf(status.toString());
+
+            if(statusCode == HttpStatus.NOT_FOUND.value()) {
+                return "error-404";
+            }
+            else if(statusCode == HttpStatus.INTERNAL_SERVER_ERROR.value()) {
+                return "error-500";
+            }
+        }
+        return "error";
+    }
 }
