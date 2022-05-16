@@ -19,6 +19,7 @@ class BootApplicationTests {
 
 	@Test
 	void contextLoads() {
+		Assertions.assertDoesNotThrow(this::doNotThrowException);
 	}
 
 	@MockBean
