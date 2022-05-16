@@ -92,7 +92,6 @@ public class CustomerServiceImpl implements CustomerService {
     public UserDTO getUserDetails() {
         Authentication authentication = authenticationFacade.getAuthentication();
         String username=authentication.getName();
-        Session session = entityManager.unwrap(Session.class);
         List<UserDTO> users = userRepository.findById(username).stream().map(this::convertUertoDto)
                 .collect(Collectors.toList());
         return users.get(0);

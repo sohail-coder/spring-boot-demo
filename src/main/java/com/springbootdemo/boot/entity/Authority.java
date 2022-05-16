@@ -1,8 +1,6 @@
 package com.springbootdemo.boot.entity;
 
 import javax.persistence.*;
-import java.util.List;
-
 @Entity
 @Table(name = "authorities")
 public class Authority {

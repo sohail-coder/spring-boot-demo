@@ -54,7 +54,7 @@ public class UserController {
         Products products =new Products();
         model.addAttribute("product", products);
         UserDTO loggedInUser =customerService.getUserDetails();
-        model.addAttribute("userName",loggedInUser.getFirstName());
+        model.addAttribute(userName,loggedInUser.getFirstName());
 
         return "add-product-form";
     }
@@ -74,7 +74,7 @@ public class UserController {
         ProductsDTO products = userService.findProduct(productId);
         model.addAttribute("product", products);
         UserDTO loggedInUser =customerService.getUserDetails();
-        model.addAttribute("userName",loggedInUser.getFirstName());
+        model.addAttribute(userName,loggedInUser.getFirstName());
         return "add-product-form";
     }
 
@@ -106,7 +106,6 @@ public class UserController {
     }
     @GetMapping("/addUser")
     public String addUser(Model model){
-        Authority auth = new Authority();
         return "add-user-form";
 
     }
