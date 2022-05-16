@@ -21,13 +21,15 @@ public class UserController {
 
     @Autowired
     private UserService userService;
+
+    String userName = "userName";
     @Autowired
     private CustomerService customerService;
 
     @GetMapping("/")
     public String userHome(Model model){
         UserDTO loggedInUser =customerService.getUserDetails();
-        model.addAttribute("userName",loggedInUser.getFirstName());
+        model.addAttribute(userName,loggedInUser.getFirstName());
         return "home-user";
     }
 
@@ -43,7 +45,7 @@ public class UserController {
         List<ProductsDTO> products = userService.findAllProducts();
         model.addAttribute("products",products);
         UserDTO loggedInUser =customerService.getUserDetails();
-        model.addAttribute("userName",loggedInUser.getFirstName());
+        model.addAttribute(userName,loggedInUser.getFirstName());
         return "all-products";
     }
 
@@ -91,21 +93,6 @@ public class UserController {
         model.addAttribute("user",user);
         return "add-user-form";
     }
-//    @PostMapping("/adduser1")
-//    public String addUserDb(@ModelAttribute("user") User user,
-//                            @ModelAttribute("authority")Authority authority
-//    ){
-//        userService.addUser(user);
-//        userService.addAuthority(user,authority.getAuthority());
-//        return "redirect:/user/allUsers";
-//    }
-
-//    @GetMapping("/deleteUser")
-//    public String deleteUser(@RequestParam("userId") String userId){
-//        userService.deleteUser(userId);
-//        return "redirect:/user/allUsers";
-//    }
-
     @GetMapping("/users")
     public String users(@RequestParam("productId") int pId,Model model){
 
@@ -113,8 +100,14 @@ public class UserController {
         users= userService.user(pId);
         model.addAttribute("users",users);
         UserDTO loggedInUser =customerService.getUserDetails();
-        model.addAttribute("userName",loggedInUser.getFirstName());
+        model.addAttribute(userName,loggedInUser.getFirstName());
         return "all-users";
+
+    }
+    @GetMapping("/addUser")
+    public String addUser(Model model){
+        Authority auth = new Authority();
+        return "add-user-form";
 
     }
 

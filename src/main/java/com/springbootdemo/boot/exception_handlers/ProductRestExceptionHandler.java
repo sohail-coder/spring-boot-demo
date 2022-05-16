@@ -1,4 +1,4 @@
-package com.springbootdemo.boot.exceptionHandlers;
+package com.springbootdemo.boot.exception_handlers;
 
 import com.springbootdemo.boot.entity.ProductErrorResponse;
 import org.springframework.http.HttpStatus;
@@ -12,7 +12,7 @@ public class ProductRestExceptionHandler {
     public ResponseEntity<ProductErrorResponse> handleException(ProductNotFoundException exc){
         ProductErrorResponse errorResponse = new ProductErrorResponse();
         errorResponse.setStatus(HttpStatus.NOT_FOUND.value());
-        errorResponse.setMessage(exc.getMessage());
+        errorResponse.setMessage("Not Found");
         errorResponse.setTimeStamp(System.currentTimeMillis());
         return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
     }

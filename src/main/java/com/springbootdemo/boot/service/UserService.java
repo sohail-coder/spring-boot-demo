@@ -20,11 +20,5 @@ public interface UserService {
 
     public User findUser(String id);
 
-//    public  String addUser(User user);
-
-//    public void deleteUser(String id);
-
-//    void addAuthority(User user, String authority);
-
     public List<User> user(int  id);
 }

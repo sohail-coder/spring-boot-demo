@@ -28,9 +28,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> findAllUsers() {
         Session session = entityManager.unwrap(Session.class);
-        Query<User> query =session.createQuery("from User",User.class);
-        List<User> users = query.getResultList();
-        return users;
+        Query<User> query = session.createQuery("from User", User.class);
+        return query.getResultList();
+
     }
 
     @Override
@@ -42,7 +42,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public ProductsDTO findProduct(int id) {
         List<ProductsDTO> product;
-        product=productRepository.findById(id).stream().map(this::convertEntityToDto)
+        product = productRepository.findById(id).stream().map(this::convertEntityToDto)
                 .collect(Collectors.toList());
         return product.get(0);
     }
@@ -52,18 +52,14 @@ public class UserServiceImpl implements UserService {
     public Products addProduct(Products products) {
         Session session = entityManager.unwrap(Session.class);
         session.merge(products);
+        System.out.println(products);
         return products;
     }
 
     @Override
     @Transactional
     public Products deleteProduct(int productId) {
-//        Session session = entityManager.unwrap(Session.class);
-//        Query query =session.createQuery("delete from Products p where p.id=:pid");
-//        query.setParameter("pid",productId);
-//        query.executeUpdate();
-//
-        Products product=productRepository.getById(productId);
+        Products product = productRepository.getById(productId);
         productRepository.deleteById(productId);
 
         return product;
@@ -72,26 +68,21 @@ public class UserServiceImpl implements UserService {
     @Override
     public User findUser(String id) {
         Session session = entityManager.unwrap(Session.class);
-        User user= session.find(User.class,id);
-        return user;
+        return session.find(User.class, id);
 
     }
+
     @Override
     @Transactional
     public List<User> user(int id) {
         Session session = entityManager.unwrap(Session.class);
-        Products products =session.get(Products.class,id);
+        Products products = session.get(Products.class, id);
         List<User> users = new ArrayList<>();
-//        List<String> list=query.list();
-
-//        for(String i: list){
-//            users.add(findUser(i));
-//        }
-        users=products.getUsers();
+        users = products.getUsers();
         return users;
     }
 
-    private ProductsDTO convertEntityToDto(Products products){
+    private ProductsDTO convertEntityToDto(Products products) {
         ProductsDTO productsDTO = new ProductsDTO();
         productsDTO.setId(products.getId());
         productsDTO.setName(products.getName());
@@ -100,12 +91,6 @@ public class UserServiceImpl implements UserService {
         return productsDTO;
     }
 
-    private UserDTO convertUertoDto(User user){
-        UserDTO userDTO = new UserDTO();
-        userDTO.setId(userDTO.getId());
-        userDTO.setFirstName(user.getFirstName());
-        return userDTO;
-    }
 
 
 //    @Override

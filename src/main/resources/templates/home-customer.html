@@ -1,5 +1,5 @@
 <!DOCTYPE html >
-<html xmlns:th="https://www.thymeleaf.org"
+<html lang="en"  xmlns:th="https://www.thymeleaf.org"
       xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -8,15 +8,8 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
           crossorigin="anonymous" />
-    <style type="text/css">
-    </style>
 </head>
 <body>
-<!--<input type="hidden" th:field="*{id}">-->
-<!--<label for="LastName">LastName</label>-->
-<!--<input th:field="*{id}"type="text" class="form-control" id="LastName" placeholder="Last Name">-->
-<!--<div sec:authorize="isAuthenticated()">-->
-<!--    Authenticated as <span sec:authentication="name"></span></div>-->
 <nav class="navbar navbar-expand-lg sticky-top navbar-dark bg-primary">
     <a class="navbar-brand" href="/">Product Management System</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -39,16 +32,6 @@
     </div>
 </nav>
 <div class="container pt-3">
-<!--    <div class="jumbotron pt-3">-->
-<!--        <h1 class="display-4">List Of Products</h1>-->
-<!--        <p class="lead">This will display you list of products</p>-->
-<!--        <hr class="my-4">-->
-<!--        <p>Click on the below button to list all the products</p>-->
-<!--        <p class="lead">-->
-<!--            <a class="btn btn-primary btn-mg" th:href="@{/customer/allProducts}" role="button">click Here</a>-->
-<!--        </p>-->
-<!--    </div>-->
-
     <div class="jumbotron pt-3">
         <h1 class="display-4">List of All Products</h1>
         <hr class="my-4">

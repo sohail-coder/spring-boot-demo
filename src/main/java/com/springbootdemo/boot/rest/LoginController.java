@@ -1,6 +1,4 @@
 package com.springbootdemo.boot.rest;
-
-import org.springframework.boot.autoconfigure.security.saml2.Saml2RelyingPartyAutoConfiguration;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 

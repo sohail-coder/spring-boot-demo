@@ -20,29 +20,19 @@ public class CustomerController {
 
     @Autowired
     private CustomerService customerService;
-
-//    private User loggedInUser =new User();
-//    @Autowired
-//    private IAuthenticationFacade authenticationFacade;
-//
-//    @RequestMapping(value = "/username", method = RequestMethod.GET)
-//    @ResponseBody
-//    public String currentUserNameSimple() {
-//        Authentication authentication = authenticationFacade.getAuthentication();
-//        return authentication.getName();
-//    }
-
+    String userName = "userName";
+    String products = "products";
     @GetMapping("/")
     public String customerHome(Model model){
         UserDTO loggedInUser =customerService.getUserDetails();
-        model.addAttribute("userName",loggedInUser.getFirstName());
+        model.addAttribute(userName,loggedInUser.getFirstName());
         return "home-customer";
     }
 
     @GetMapping("/allProducts")
     public String allProducts(Model model){
-        List<Products> products = customerService.findAllProducts();
-        model.addAttribute("products",products);
+        List<Products> product = customerService.findAllProducts();
+        model.addAttribute(products,product);
 
         return "customer-all-products";
     }
@@ -50,19 +40,18 @@ public class CustomerController {
     @GetMapping("/myProducts")
     public String myProducts(Model model){
         UserDTO user = customerService.getUserDetails();
-        List<Products> products = user.getProducts();
-        model.addAttribute("products",products);
-//        User loggedInUser =customerService.getUserDetails();
-        model.addAttribute("userName",user.getFirstName());
+        List<Products> product = user.getProducts();
+        model.addAttribute(products,product);
+        model.addAttribute(userName,user.getFirstName());
         return "customer-all-products";
     }
 
     @GetMapping("/addProductForm")
     public String addProductForm(Model model){
-        List<Products> products = customerService.findAllProducts();
-        model.addAttribute("products",products);
+        List<Products> product = customerService.findAllProducts();
+        model.addAttribute(products,product);
         UserDTO loggedInUser =customerService.getUserDetails();
-        model.addAttribute("userName",loggedInUser.getFirstName());
+        model.addAttribute(userName,loggedInUser.getFirstName());
         return "customer-add-product";
     }
 
@@ -84,7 +73,6 @@ public class CustomerController {
     @ResponseBody
     public String getUserDetails(){
         return customerService.getUserDetails().getFirstName();
-//        return customerService.getUserDetails();
     }
 
     @RequestMapping("/error")

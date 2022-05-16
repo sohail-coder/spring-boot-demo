@@ -1,4 +1,4 @@
-package com.springbootdemo.boot.exceptionHandlers;
+package com.springbootdemo.boot.exception_handlers;
 
 public class ProductNotFoundException extends RuntimeException{
     public ProductNotFoundException(String message) {

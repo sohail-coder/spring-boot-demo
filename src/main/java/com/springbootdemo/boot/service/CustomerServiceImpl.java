@@ -2,11 +2,10 @@ package com.springbootdemo.boot.service;
 
 import com.springbootdemo.boot.dao.ProductRepository;
 import com.springbootdemo.boot.dao.UserRepository;
-import com.springbootdemo.boot.dto.ProductsDTO;
 import com.springbootdemo.boot.dto.UserDTO;
 import com.springbootdemo.boot.entity.Products;
 import com.springbootdemo.boot.entity.User;
-import com.springbootdemo.boot.userDetails.IAuthenticationFacade;
+import com.springbootdemo.boot.user_details.IAuthenticationFacade;
 import org.hibernate.Session;
 import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,25 +36,21 @@ public class CustomerServiceImpl implements CustomerService {
     public List<Products> findAllProducts() {
         Session session = entityManager.unwrap(Session.class);
         Query<Products> query =session.createQuery("from Products", Products.class);
-        List<Products> products = query.getResultList();
-        return products;
+        return query.getResultList();
     }
 
     @Override
     public List<Products> findProducts(int id) {
         Session session = entityManager.unwrap(Session.class);
         User tempUser = session.get(User.class, id);
-        List<Products> products=tempUser.getProducts();
-        return products;
+        return tempUser.getProducts();
     }
 
     @Override
     @Transactional
     public Products addProduct(UserDTO username, int pid) {
         Session session = entityManager.unwrap(Session.class);
-//        User tempUser = session.get(User.class, id);
         Products product = session.get(Products.class,pid);
-//        User tempUser = session.get(User.class, username.getEmail());
         User tempUser = userRepository.getById(username.getEmail());
         List<Products> products=tempUser.getProducts();
         List<User> users=product.getUsers();
@@ -81,9 +76,7 @@ public class CustomerServiceImpl implements CustomerService {
         List<Products> products = user.getProducts();
         for(Products product : products){
             if(product.getId()!=pid){
-//                products.remove(i-1);
                 i=i+1;
-                continue;
             }
             else{
                 break;
@@ -100,7 +93,6 @@ public class CustomerServiceImpl implements CustomerService {
         Authentication authentication = authenticationFacade.getAuthentication();
         String username=authentication.getName();
         Session session = entityManager.unwrap(Session.class);
-        User tempUser = session.get(User.class, username);
         List<UserDTO> users = userRepository.findById(username).stream().map(this::convertUertoDto)
                 .collect(Collectors.toList());
         return users.get(0);
@@ -115,13 +107,4 @@ public class CustomerServiceImpl implements CustomerService {
         userDTO.setPhone(user.getPhone());
         return userDTO;
     }
-    private ProductsDTO convertEntityToDto(Products products){
-        ProductsDTO productsDTO = new ProductsDTO();
-        productsDTO.setId(products.getId());
-        productsDTO.setName(products.getName());
-        productsDTO.setPrice(products.getPrice());
-        productsDTO.setUsers(products.getUsers());
-        return productsDTO;
-    }
-
 }

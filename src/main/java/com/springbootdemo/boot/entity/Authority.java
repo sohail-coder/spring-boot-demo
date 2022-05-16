@@ -1,6 +1,7 @@
 package com.springbootdemo.boot.entity;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "authorities")
@@ -12,7 +13,7 @@ public class Authority {
     private int id;
 
     @Column(name = "authority")
-    private String authority;
+    private String role;
 
     @ManyToOne(cascade = {CascadeType.MERGE,CascadeType.PERSIST,CascadeType.DETACH,CascadeType.REFRESH})
     @JoinColumn(name = "username")
@@ -22,7 +23,7 @@ public class Authority {
     }
     public Authority(String authority, int id) {
         this.id = id;
-        this.authority = authority;
+        this.role = authority;
     }
 
     public User getUser() {
@@ -35,11 +36,11 @@ public class Authority {
     }
 
     public String getAuthority() {
-        return authority;
+        return role;
     }
 
     public void setAuthority(String authority) {
-        this.authority = authority;
+        this.role = authority;
     }
 
     public int getId() {

@@ -1,4 +1,4 @@
-package com.springbootdemo.boot.errorController;
+package com.springbootdemo.boot.error_controller;
 
 import org.springframework.boot.web.servlet.error.ErrorController;
 import org.springframework.http.HttpStatus;
@@ -15,8 +15,6 @@ public class MyErrorController implements ErrorController {
     public String handleError(HttpServletRequest request) {
         // get error status
         Object status = request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE);
-
-        // TODO: log error details here
 
         if (status != null) {
             int statusCode = Integer.parseInt(status.toString());

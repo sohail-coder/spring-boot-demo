@@ -1,4 +1,4 @@
-package com.springbootdemo.boot.userDetails;
+package com.springbootdemo.boot.user_details;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;

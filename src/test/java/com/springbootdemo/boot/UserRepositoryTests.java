@@ -15,7 +15,7 @@ import org.springframework.test.annotation.Rollback;
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 @Rollback(value = false)
-public class UserRepositoryTests {
+ class UserRepositoryTests {
     @Autowired
     private UserRepository userRepository;
 
@@ -35,50 +35,13 @@ public class UserRepositoryTests {
     }
 
     @Test
-    public void testCreateProduct(){
+     void testCreateProduct(){
         Products products = new Products("pine","90");
         testEntityManager.persist(products);
     }
     @Test
-    public void testCreateUser(){
+     void testCreateUser(){
         User user = new User("suresh","Lenin","ramesh@gmail.com","123456","test");
         testEntityManager.persist(user);
     }
-
-
-
-
-
-
-
-
-//    @Test
-//    public void testCreateAuth(){
-//        Authority  authority = new Authority("ROLE_CUSTOMER",4);
-////        User user =userRepository.findById("ramesh@gmail.com").get();
-////        user.getAuthorities().add(authority);
-//        User users = userRepository.findById("ramesh@gmail.com").get();
-//        authority.setUser(users);
-//        authorityRepository.saveAndFlush(authority);
-//        testEntityManager.merge(authority);
-////        testEntityManager.merge(user);
-//
-//    }
-//    @Test
-//    public void addAuthority(){
-//        User user =userRepository.findById("ramesh@gmail.com").get();
-//        Authority authority = new Authority("ROLE_CUSTOMER",4);
-//        List<Authority> authorities = new ArrayList<>();
-//        authorities.add(authority);
-//        user.setAuthorities(authorities);
-////        userRepository.
-//        authority.setUser(user);
-////        testEntityManager.persist(user);
-////        testEntityManager.merge(user);
-//        authorityRepository.save(authority);
-//        testEntityManager.persist(authority);
-//        System.out.println(user);
-//    }
-
-
 }
