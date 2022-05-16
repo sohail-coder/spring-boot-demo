@@ -25,8 +25,8 @@ public class UserController {
     String userName = "userName";
     @Autowired
     private CustomerService customerService;
-    String add_user_form = "add-user-form";
-    String add_product_form="add-product-form";
+    String addUserForm = "add-user-form";
+    String addProductForm="add-product-form";
 
     @GetMapping("/")
     public String userHome(Model model){
@@ -58,7 +58,7 @@ public class UserController {
         UserDTO loggedInUser =customerService.getUserDetails();
         model.addAttribute(userName,loggedInUser.getFirstName());
 
-        return add_product_form;
+        return addProductForm;
     }
     @PostMapping("/addProduct1")
     public String addProductDb(@ModelAttribute("product") Products products){
@@ -77,7 +77,7 @@ public class UserController {
         model.addAttribute("product", products);
         UserDTO loggedInUser =customerService.getUserDetails();
         model.addAttribute(userName,loggedInUser.getFirstName());
-        return add_product_form;
+        return addProductForm;
     }
 
     @GetMapping("/showFormForAddUser")
@@ -86,14 +86,14 @@ public class UserController {
         Authority authority = new Authority();
         model.addAttribute("user",user);
         model.addAttribute("authority",authority);
-        return add_user_form;
+        return addUserForm;
     }
 
     @GetMapping("/showFormForUpdateUser")
     public String showFormForUpdateUser(@RequestParam("userId")String userId,Model model){
         User user = userService.findUser(userId);
         model.addAttribute("user",user);
-        return add_user_form;
+        return addUserForm;
     }
     @GetMapping("/users")
     public String users(@RequestParam("productId") int pId,Model model){
@@ -108,7 +108,7 @@ public class UserController {
     }
     @GetMapping("/addUser")
     public String addUser(Model model){
-        return add_user_form;
+        return addUserForm;
 
     }
 

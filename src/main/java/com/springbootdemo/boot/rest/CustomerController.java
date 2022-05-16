@@ -1,18 +1,19 @@
 package com.springbootdemo.boot.rest;
 
 import com.springbootdemo.boot.dto.UserDTO;
-import com.springbootdemo.boot.entity.User;
+import javax.script.*;
 import com.springbootdemo.boot.service.CustomerService;
 import com.springbootdemo.boot.entity.Products;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
 import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.logging.Logger;
 
 @Controller
 @RequestMapping("/customer")
@@ -22,6 +23,8 @@ public class CustomerController {
     private CustomerService customerService;
     String userName = "userName";
     String products = "products";
+
+    Logger logger = (Logger) LoggerFactory.getLogger(CustomerController.class);
     @GetMapping("/")
     public String customerHome(Model model){
         UserDTO loggedInUser =customerService.getUserDetails();
@@ -56,10 +59,22 @@ public class CustomerController {
     }
 
     @GetMapping("/addProduct")
-    public String addProduct(@RequestParam("pId")int id){
+    public String addProduct(@RequestParam("pId")int id) throws ScriptException {
         UserDTO user = customerService.getUserDetails();
-
-        customerService.addProduct(user,id);
+        List<Products> product = user.getProducts();
+        boolean flag = false;
+        for(Products p : product){
+            if(p.getId()==id){
+                flag=true;
+                break;
+            }
+        }
+        if(flag){
+            logger.info("Duplicate addition of product");
+        }
+        else {
+            customerService.addProduct(user, id);
+        }
         return "redirect:/customer/addProductForm";
     }
     @GetMapping("/delete")
