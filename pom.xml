@@ -17,6 +17,18 @@
 		<java.version>11</java.version>
 		<sonar.organization>sohail-coder</sonar.organization>
 		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
+		<sonar.exclusions>
+			**/com/springbootdemo/boot/dao/**,
+			**/com/springbootdemo/boot/dto/**,
+			**/com/springbootdemo/boot/entity/**,
+			**/com/springbootdemo/boot/error_controller/**,
+			**/com/springbootdemo/boot/exception_handlers/**,
+			**/com/springbootdemo/boot/repository/**,
+			**/com/springbootdemo/boot/rest/**,
+			**/com/springbootdemo/boot/service/CustomerService,
+			**/com/springbootdemo/boot/service/CustomerServiceImpl,
+			**/com/springbootdemo/boot/user_details/**
+		</sonar.exclusions>
 		<sonar.coverage.jacoco.xmlReportPaths>
 			../app-it/target/site/jacoco-aggregate/jacoco.xml
 		</sonar.coverage.jacoco.xmlReportPaths>

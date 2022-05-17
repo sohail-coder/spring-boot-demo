@@ -2,7 +2,6 @@ package com.springbootdemo.boot.service;
 
 import com.springbootdemo.boot.dao.ProductRepository;
 import com.springbootdemo.boot.dto.ProductsDTO;
-import com.springbootdemo.boot.dto.UserDTO;
 import com.springbootdemo.boot.entity.Products;
 import com.springbootdemo.boot.entity.User;
 import org.hibernate.Session;
@@ -76,9 +75,7 @@ public class UserServiceImpl implements UserService {
     public List<User> user(int id) {
         Session session = entityManager.unwrap(Session.class);
         Products products = session.get(Products.class, id);
-        List<User> users = new ArrayList<>();
-        users = products.getUsers();
-        return users;
+        return products.getUsers();
     }
 
     private ProductsDTO convertEntityToDto(Products products) {
