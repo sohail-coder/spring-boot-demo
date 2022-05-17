@@ -13,7 +13,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
-import java.util.logging.Logger;
+import ch.qos.logback.classic.Logger;
+import ch.qos.logback.classic.LoggerContext;
 
 @Controller
 @RequestMapping("/customer")
@@ -24,7 +25,8 @@ public class CustomerController {
     String userName = "userName";
     String products = "products";
 
-    Logger logger = (Logger) LoggerFactory.getLogger(CustomerController.class);
+    LoggerContext context = new LoggerContext();
+    Logger logger = context.getLogger("testLogger");
     @GetMapping("/")
     public String customerHome(Model model){
         UserDTO loggedInUser =customerService.getUserDetails();
@@ -90,7 +92,7 @@ public class CustomerController {
         return customerService.getUserDetails().getFirstName();
     }
 
-    @RequestMapping("/error")
+    @GetMapping("/error")
     public String handleError(HttpServletRequest request) {
         Object status = request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE);
 
